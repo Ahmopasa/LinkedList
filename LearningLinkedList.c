@@ -67,31 +67,25 @@ PRIVATE const char* getCity()
 	return cityList[rand() % 80];
 }
 
-// A Random Date Generator (WIP)
+// A Random Date Generator
 PRIVATE void getDate(void* head)
 {
 	linkedList* first = (linkedList*)head;
-	int year;
-	int year_leap;
-	int counter_date;
-
+	
+	first->year = rand() % (2020 - 1989 + 1) + 1989;
+	
 	static const int daytabs[][13] = {
-							{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
-							{0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
+			{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
+			{0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
 	};
-
 	static const char* const pmons[] = { "","Ocak","Subat","Mart","Nisan","Mayis","Haziran","Temmuz","Agustos","Eylul","Ekim","Kasim","Aralik" };
 
-
-	year = rand() % (2020 - 1989 + 1) + 1989;
-	year_leap = check_leap(year);
-	counter_date = rand() % 12 + 1;
-	first->year = year;
+	int counter_date = rand() % 12 + 1;
+	int tempDay = daytabs[check_leap(first->year)][counter_date];
+	first->day = rand() % tempDay + 1;
 	strcpy(first->month, pmons[counter_date]);
-	first->day = daytabs[year_leap][counter_date];
 
 }
-
 
 // A FUNCTION TO INCREASE THE LIST RIGHTWARD
 PRIVATE linkedList* AppendToRight(linkedList** head)
@@ -233,16 +227,20 @@ PUBLIC void* AddNewNodesBetweenTwo(void** voidPtr, int position_X, int total_amo
 		for (int i = 0; i < total_amount; i++)
 			temporary = AppendToRight(&temporary);
 
-		ShowLinkedList(temporary);
+		if (temporary != NULL)
+		{
+			ShowLinkedList(temporary);
 
-		first->nextPtr = temporary;
-	
-		for (; temporary->nextPtr != NULL; temporary = temporary->nextPtr)
-			;
+			first->nextPtr = temporary;
 
-		temporary->nextPtr = second;
-		
-		return (linkedList*)(*head);
+			for (; temporary->nextPtr != NULL; temporary = temporary->nextPtr)
+				;
+
+			temporary->nextPtr = second;
+
+			return (linkedList*)(*head);
+		}
+		fprintf(stderr, " temporary list could not be created. Returning NULL...\n"); return NULL;
 	}
 	else
 	{
