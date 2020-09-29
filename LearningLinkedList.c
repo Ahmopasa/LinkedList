@@ -92,154 +92,6 @@ PRIVATE void getDate(void* head)
 
 }
 
-// SORTING FUNCTION BY NAME
-PRIVATE int cmp_student_name(const void* voidPtr, const void* _voidPtr)
-{
-	const linkedList* source1 = (const linkedList*)voidPtr;
-	const linkedList* source2 = (const linkedList*)_voidPtr;
-	return strcmp(source1->name, source2->name);
-}
-
-// SORTING FUNCTION BY SURNAME
-PRIVATE int cmp_student_surname(const void* voidPtr, const void* _voidPtr)
-{
-	const linkedList* source1 = (const linkedList*)voidPtr;
-	const linkedList* source2 = (const linkedList*)_voidPtr;
-	return strcmp(source1->name, source2->name);
-}
-
-// SORTING FUNCTION BY ID
-PRIVATE int cmp_student_ID(const void* voidPtr, const void* _voidPtr)
-{
-	const linkedList* source1 = (const linkedList*)voidPtr;
-	const linkedList* source2 = (const linkedList*)_voidPtr;
-	return (int)(source1->ID - source2->ID);
-}
-
-// SORTING FUNCTION BY AVERAGE SCORE
-PRIVATE int cmp_student_Average(const void* voidPtr, const void* _voidPtr)
-{
-	const linkedList* source1 = (const linkedList*)voidPtr;
-	const linkedList* source2 = (const linkedList*)_voidPtr;
-	return (int)(source1->average - source2->average);
-}
-
-// SORTING FUNCTION DETAILED.
-PRIVATE int cmp_student(const void* voidPtr, const void* _voidPtr)
-{
-	const linkedList* source1 = (const linkedList*)voidPtr;
-	const linkedList* source2 = (const linkedList*)_voidPtr;
-
-	int cmp_result = cmp_student_Average(source1, source2);
-	if (cmp_result)
-		return cmp_result;
-
-	cmp_result = cmp_student_ID(source1, source2);
-	if (cmp_result)
-		return cmp_result;
-
-	cmp_result = cmp_student_name(source1, source2);
-	if (cmp_result)
-		return cmp_result;
-
-	cmp_result = cmp_student_surname(source1, source2);
-	if (cmp_result)
-		return cmp_result;
-
-	return 0;
-}
-
-//GLOBAL SORTING FUNCTION BY ID
-PRIVATE void SORT_ID(void* voidPtr, int total_size)
-{
-	linkedList* my_class = (linkedList*)voidPtr;
-	qsort(my_class, total_size, sizeof(*my_class), cmp_student_ID);
-}
-
-//GLOBAL SORTING FUNCTION BY AVERAGE SCORE
-PRIVATE void SORT_AVERAGE_SCORE(void* voidPtr, int total_size)
-{
-	linkedList* my_class = (linkedList*)voidPtr;
-	qsort(my_class, total_size, sizeof(*my_class), cmp_student_Average);
-}
-
-//GLOBAL SORTING FUNCTION BY NAME
-PRIVATE void SORT_NAME(void* voidPtr, int total_size)
-{
-	linkedList* my_class = (linkedList*)voidPtr;
-	qsort(my_class, total_size, sizeof(*my_class), cmp_student_name);
-}
-
-//GLOBAL SORTING FUNCTION BY SURNAME
-PRIVATE void SORT_SURNAME(void* voidPtr, int total_size)
-{
-	linkedList* my_class = (linkedList*)voidPtr;
-	qsort(my_class, total_size, sizeof(*my_class), cmp_student_surname);
-}
-
-//GLOBAL SORTING FUNCTION BY CITY
-PRIVATE void SORT_CITY(void* voidPtr, int total_size)
-{
-	linkedList* my_class = (linkedList*)voidPtr;
-	printf("WIP. SO, SORTING MADE BY ID");
-	qsort(my_class, total_size, sizeof(*my_class), cmp_student_ID);
-}
-
-//GLOBAL SORTING FUNCTION BY YEAR
-PRIVATE void SORT_YEAR(void* voidPtr, int total_size)
-{
-	linkedList* my_class = (linkedList*)voidPtr;
-	printf("WIP. SO, SORTING MADE BY ID");
-	qsort(my_class, total_size, sizeof(*my_class), cmp_student_ID);
-}
-
-//GLOBAL SORTING FUNCTION BY MONTH
-PRIVATE void SORT_MONTH(void* voidPtr, int total_size)
-{
-	linkedList* my_class = (linkedList*)voidPtr;
-	printf("WIP. SO, SORTING MADE BY ID");
-	qsort(my_class, total_size, sizeof(*my_class), cmp_student_ID);
-}
-
-//GLOBAL SORTING FUNCTION BY DAY
-PRIVATE void SORT_DAY(void* voidPtr, int total_size)
-{
-	linkedList* my_class = (linkedList*)voidPtr;
-	printf("WIP. SO, SORTING MADE BY ID");
-	qsort(my_class, total_size, sizeof(*my_class), cmp_student_ID);
-}
-
-//GLOBAL FUNCTION SORTING DEEPLY
-PRIVATE void SORT_DEEPLY(void* voidPtr, int total_size)
-{
-	linkedList* my_class = (linkedList*)voidPtr;
-	qsort(my_class, total_size, sizeof(*my_class), cmp_student);
-}
-
-
-// LOOK-UP TABLE FOR USER SORTING DESIRE
-PRIVATE SORT strToEnum(const char* index)
-{
-
-	const char SORTING_DESIRE[][8] = { "ID", "SCORE", "NAME", "SURNAME", "CITY", "YEAR", "MONTH", "DAY", "DEEPLY" };
-	int databaseWish = (sizeof(SORTING_DESIRE) / sizeof(*SORTING_DESIRE));
-
-	while (databaseWish--) {
-		if (!strcmp(index, SORTING_DESIRE[databaseWish]))
-			break;
-	}
-
-	if (databaseWish == 0) return SORT_BY_ID;
-	if (databaseWish == 1) return SORT_BY_SCORE;
-	if (databaseWish == 2) return SORT_BY_NAME;
-	if (databaseWish == 3) return SORT_BY_SURNAME;
-	if (databaseWish == 4) return SORT_BY_CITY;
-	if (databaseWish == 5) return SORT_BY_YEAR;
-	if (databaseWish == 6) return SORT_BY_MONTH;
-	if (databaseWish == 7) return SORT_BY_DAY;
-	if (databaseWish == 8) return SORT_BY_DEEPLY;
-	else return EMPTY;
-}
 
 // A FUNCTION TO INCREASE THE LIST RIGHTWARD
 PRIVATE linkedList* AppendToRight(linkedList** head)
@@ -328,16 +180,6 @@ PRIVATE linkedList* AppendToLeft(linkedList** head)
 
 
 /**************************A PLACE TO DECLARE GLOBAL FUNCTIONS****************************/
-// Test UI Function Used for Linked List
-PUBLIC void LinkedListUserInterfaceTestCode(void)
-{
-	srand((unsigned)time(NULL));
-	void* first = NULL;
-	first = AddAfterTheLastNode(&first, 2); ShowLinkedList(first);
-	first = AddBeforeTheFirstNode(&first, 5); ShowLinkedList(first);
-	SaveLinkedList(first);
-
-}
 
 //A FUNCTION TO ADD A NEW NODE AT THE START OF THE LIST
 PUBLIC void* AddBeforeTheFirstNode(void** voidPtr, int total_amount)
@@ -367,6 +209,46 @@ PUBLIC void* AddAfterTheLastNode(void** voidPtr, int total_amount)
 		first = AppendToRight(&first);
 
 	return (linkedList*)first;
+}
+
+PUBLIC void* AddNewNodesBetweenTwo(void** voidPtr, int position_X, int total_amount)
+{
+	
+	linkedList** head = (linkedList**)(voidPtr);
+
+	linkedList* first = *head;
+	linkedList* second = first->nextPtr;
+
+	if (first != NULL && second != NULL)
+	{
+		fprintf(stdout, "The list is suitable to proceed...\n");
+
+		for (int x = 0; x < position_X; x++)
+		{
+			first = first->nextPtr;
+			second = second->nextPtr;
+		}
+
+		linkedList* temporary = NULL;
+		for (int i = 0; i < total_amount; i++)
+			temporary = AppendToRight(&temporary);
+
+		ShowLinkedList(temporary);
+
+		first->nextPtr = temporary;
+	
+		for (; temporary->nextPtr != NULL; temporary = temporary->nextPtr)
+			;
+
+		temporary->nextPtr = second;
+		
+		return (linkedList*)(*head);
+	}
+	else
+	{
+		fprintf(stderr, "There are nodes less than 2. Returning NULL...\n"); return NULL;
+	}
+
 }
 
 //A FUNCTION TO SHOW WHOLE LINKED LIST
